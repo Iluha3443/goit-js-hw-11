@@ -78,7 +78,7 @@ function createMarkup(info) {
 // });
   const markupValues = info.map(({webformatURL,largeImageURL,tags,likes,views,comments,downloads}) => {
    return `<div class="photo-card">
-      <a href="${largeImageURL}" class ="simple"><img src="${webformatURL}" alt="${tags}" loading="lazy" /></a>
+      <a href="${largeImageURL}" class ="simple"><img src="${webformatURL}" alt="${tags}" loading="lazy" class="photo" /></a>
       <div class="info">
         <p class="info-item">
           <b>Likes:${likes}</b>
@@ -95,7 +95,6 @@ function createMarkup(info) {
       </div>
     </div>`
   }).join('');
-
   gallery.refresh();
   parentEl.innerHTML = markupValues;
 };

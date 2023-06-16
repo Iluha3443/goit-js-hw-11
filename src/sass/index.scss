@@ -1,2 +1,71 @@
 @import './common';
 @import './example';
+
+.btn{
+    width: 100px;
+    height: 60px;
+    color: blue;
+    background-color: teal;
+}
+.input{
+    width: 300px;
+        height: 60px;
+}
+input:focus {
+    outline: none;
+    border-color: #4d90fe;
+    box-shadow: 0 0 5px rgba(77, 144, 254, 0.5);
+}
+.search-form{
+    z-index: 10;
+position: absolute;
+    left: 50%;
+    bottom: 10%;
+    transform: translateX(-50%);
+}
+
+.background{
+    display: flex;
+        text-align: center;
+        justify-content: center;
+    height: 200px;
+    position: relative;
+    background-color: brown;
+    
+}
+
+.photo-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+.photo-card .simple {
+    text-decoration: none;
+}
+
+.photo-card .photo {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+   
+}
+
+.photo-card .info {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    color: #4d90fe;
+}
+
+.photo-card .info-item {
+    margin-bottom: 5px;
+}
+
+.photo-card .info-item b {
+    font-weight: bold;
+}
