@@ -4,8 +4,12 @@
 .btn{
     width: 100px;
     height: 60px;
-    color: blue;
-    background-color: teal;
+    border: none;
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+.btn:hover {
+    background-color: #e1e1e1;
 }
 .input{
     width: 300px;
@@ -68,4 +72,23 @@ position: absolute;
 
 .photo-card .info-item b {
     font-weight: bold;
+}
+
+
+.load-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.load-more {
+    padding: 10px 20px;
+    background-color: #f1f1f1;
+    border: none;
+    cursor: pointer;
+}
+
+.load-more:hover {
+    background-color: #e1e1e1;
 }

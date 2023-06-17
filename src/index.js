@@ -10,6 +10,10 @@ const loadMoreBtn = document.querySelector('.load-more')
 
 formEl.addEventListener('submit', onSubmitForm);
 
+const gallery = new SimpleLightbox('.simple', {
+    captionsData: 'alt',
+    captionDelay: 250,
+  });
 const myKey = '37292159-607e55aeb61a23e05d40a5fe8';
 let currentPage = 1;
 loadMoreBtn.style.display = 'none';
@@ -23,16 +27,37 @@ const params = {
   page: currentPage,
 };
 
+loadMoreBtn.addEventListener('click', loadMoreImages);
+
+async function loadMoreImages() {
+  params.page += 1;
+  const response = await axios.get(`https://pixabay.com/api/?key=${myKey}`, { params });
+   const requiredValues = response.data.hits.map(data => ({
+      webformatURL: data.webformatURL,
+      largeImageURL: data.largeImageURL,
+      tags: data.tags,
+      likes: data.likes,
+      views: data.views,
+      comments: data.comments,
+      downloads: data.downloads
+    }));
+  createMarkup(requiredValues)
+};
+
+
 
 async function onSubmitForm(e) {
   e.preventDefault();
+  parentEl.innerHTML = '';
   loadMoreBtn.style.display = 'none';
-  if (inputEl.value) {
-    currentPage = 1;
+  
+  if (params.q === inputEl.value) {
+    params.page += 1;
+  } else {
+     params.page = 1;
   }
-  loadMoreBtn.style.display = 'block';
-  params.page = currentPage;
   params.q = inputEl.value;
+
   try {
     const response = await axios.get(`https://pixabay.com/api/?key=${myKey}`, { params });
     const requiredValues = response.data.hits.map(data => ({
@@ -54,8 +79,10 @@ async function onSubmitForm(e) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
       } 
     }
+    loadMoreBtn.style.display = 'block';
     createMarkup(requiredValues);
-    currentPage += 1;
+    gallery.refresh();
+    
   } catch (error) {
     console.error(error);
   }
@@ -63,19 +90,6 @@ async function onSubmitForm(e) {
 
 
 function createMarkup(info) {
-  parentEl.innerHTML = '';
-  const gallery = new SimpleLightbox('.simple', {
-    captionsData: 'alt',
-    captionDelay: 250,
-  });
-//     const { height: cardHeight } = document
-//   .querySelector(".gallery")
-//   .firstElementChild.getBoundingClientRect();
-
-// window.scrollBy({
-//   top: cardHeight * 2,
-//   behavior: "smooth",
-// });
   const markupValues = info.map(({webformatURL,largeImageURL,tags,likes,views,comments,downloads}) => {
    return `<div class="photo-card">
       <a href="${largeImageURL}" class ="simple"><img src="${webformatURL}" alt="${tags}" loading="lazy" class="photo" /></a>
@@ -95,6 +109,5 @@ function createMarkup(info) {
       </div>
     </div>`
   }).join('');
-  gallery.refresh();
-  parentEl.innerHTML = markupValues;
+  parentEl.insertAdjacentHTML('beforeend', markupValues);
 };
