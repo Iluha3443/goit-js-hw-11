@@ -43,14 +43,14 @@ async function loadMoreImages() {
       comments: data.comments,
       downloads: data.downloads
     }));
-
-    createMarkup(requiredValues);
-    gallery.refresh();
-
-    if (params.page * params.per_page >= response.data.totalHits) {
+if (params.page * params.per_page >= response.data.totalHits) {
       loadMoreBtn.style.display = 'none';
       Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
     }
+    createMarkup(requiredValues);
+    gallery.refresh();
+
+    
   } catch (error) {
     console.log(error);
   }
@@ -58,12 +58,15 @@ async function loadMoreImages() {
 
 async function onSubmitForm(e) {
   e.preventDefault();
+  params.page += 1;
   parentEl.innerHTML = '';
   loadMoreBtn.style.display = 'none';
 
-  if (params.q === inputEl.value) {
+
+  if (params.q !== inputEl.value) {
     params.page = 1;
   }
+
   params.q = inputEl.value;
   
   try {
